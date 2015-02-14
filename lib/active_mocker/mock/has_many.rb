@@ -17,7 +17,7 @@ module Mock
       @source         = options[:source]
       self.class.include "#{@relation_class.name}::Scopes".constantize
       super(collection)
-      set_foreign_key
+      set_foreign_key if Feature.auto_association
     end
 
     def set_foreign_key

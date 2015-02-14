@@ -107,7 +107,11 @@ class MicropostMock < ActiveMocker::Mock::Base
 
 # belongs_to
   def user
-    read_association(:user) || write_association(:user, classes('User').try{ |k| k.find_by(id: user_id)})
+    if ActiveMocker::Feature.auto_association
+      read_association(:user) || write_association(:user, classes('User').try{ |k| k.find_by(id: user_id)})
+    else
+      read_association(:user)
+    end
   end
 
   def user=(val)

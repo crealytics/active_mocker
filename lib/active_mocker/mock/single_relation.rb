@@ -1,13 +1,12 @@
 module ActiveMocker
   module Mock
-
     class SingleRelation
 
       attr_reader :item
 
       def initialize(item, child_self:, foreign_key:)
         @item = item
-        assign_associations(child_self, item) if item.class <= Base
+        assign_associations(child_self, item) if item.class <= Base if Feature.auto_association
       end
 
       def assign_associations(child_self, item)
@@ -23,7 +22,6 @@ module ActiveMocker
       end
 
     end
-
   end
 end
 

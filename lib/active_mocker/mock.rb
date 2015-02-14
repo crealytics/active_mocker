@@ -9,6 +9,7 @@ require 'virtus'
 require 'active_mocker/version'
 require 'active_mocker/logger'
 require 'active_mocker/loaded_mocks'
+require 'active_mocker/feature'
 require 'active_mocker/mock/hash_process'
 require 'active_mocker/mock/collection'
 require 'active_mocker/mock/queries'
@@ -26,3 +27,5 @@ require 'active_mocker/mock/do_nothing_active_record_methods'
 require 'active_mocker/mock/records'
 require 'active_mocker/mock/object_inspect'
 require 'active_mocker/mock/base'
+ActiveMocker::Feature.reset
+

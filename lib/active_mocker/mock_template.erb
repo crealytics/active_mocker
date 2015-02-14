@@ -74,7 +74,11 @@ class <%= class_name + @mock_append_name %> < <%= parent_class %>
 <% belongs_to.each do |meth| %>
   def <%= meth.name %>
 <% association = relation_find(:name, meth.name).first -%>
-    read_association(:<%= meth.name %>) || write_association(:<%= meth.name %>, classes('<%= association.class_name %>').try{ |k| k.find_by(id: <%= association.foreign_key %>)})
+    if ActiveMocker::Feature.auto_association
+      read_association(:<%= meth.name %>) || write_association(:<%= meth.name %>, classes('<%= association.class_name %>').try{ |k| k.find_by(id: <%= association.foreign_key %>)})
+    else
+      read_association(:<%= meth.name %>)
+    end
   end
 
   def <%= meth.name %>=(val)

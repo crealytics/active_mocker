@@ -6,8 +6,10 @@ module ActiveMocker
       attr_reader :item
 
       def initialize(item, child_self:, foreign_key:)
-        save_item(item, child_self)
-        assign_foreign_key(child_self, foreign_key, item.try(:id))
+        if Feature.auto_association
+          save_item(item, child_self)
+          assign_foreign_key(child_self, foreign_key, item.try(:id))
+        end
         super
       end
 
