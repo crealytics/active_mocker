@@ -31,7 +31,7 @@ module ActiveMocker
         @log_location       = 'log/active_mocker.log' unless @log_location
         @clear_log_on_build = true
         @generate_for_mock  = ENV['MODEL']
-        rails_defaults if Object.const_defined?('Rails')
+        setup_defaults(Object.const_defined?('Rails') ? Rails.root : Dir.getwd)
       end
 
       def logger
@@ -55,10 +55,10 @@ module ActiveMocker
         ::Logger.new(@log_location)
       end
 
-      def rails_defaults
-        @schema_file = File.join(Rails.root, 'db/schema.rb') unless @schema_file
-        @model_dir   = File.join(Rails.root, 'app/models')   unless @model_dir
-        @mock_dir    = File.join(Rails.root, 'spec/mocks')   unless @mock_dir
+      def setup_defaults(base_dir)
+        @schema_file = File.join(base_dir, 'db/schema.rb') unless @schema_file
+        @model_dir   = File.join(base_dir, 'app/models')   unless @model_dir
+        @mock_dir    = File.join(base_dir, 'spec/mocks')   unless @mock_dir
       end
 
       def clear_log
