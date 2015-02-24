@@ -101,10 +101,14 @@ class Generate
   end
 
   def clean_up
-    FileUtils.rm_rf("#{Config.mock_dir}/", secure: true) unless Config.generate_for_mock
-    FileUtils::mkdir_p Config.mock_dir unless File.directory? Config.mock_dir
+    raise "Config.mock_dir is not set, aborting! #{subdirectories}" if Config.mock_dir.nil? || Config.mock_dir.empty?
+    #FileUtils.rm_rf("#{Config.mock_dir}/", secure: true) unless Config.generate_for_mock
+    #FileUtils::mkdir_p Config.mock_dir unless File.directory? Config.mock_dir
   end
 
+  def subdirectories
+    Dir.glob(File.expand_path('../../**/*', __FILE__)).select {|f| File.directory?(f)}
+  end
   def mock_append_name
     'Mock'
   end
